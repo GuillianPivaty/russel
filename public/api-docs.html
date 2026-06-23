@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentation API — Port de Russell</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #0d1b2a; --sea: #1a3a5c; --wave: #2563a8;
+      --foam: #e8f4f8; --sand: #f5f0e8; --rope: #c9a96e;
+      --text: #1a2332; --muted: #6b7a8d; --border: #dce6ef;
+      --get: #1a7a4a; --get-bg: #e6f4ed;
+      --post: #7c3aed; --post-bg: #ede9fe;
+      --put: #d97706; --put-bg: #fef3c7;
+      --delete: #c0392b; --delete-bg: #fdecea;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: var(--sand); color: var(--text); }
+    header { background: var(--navy); color: white; padding: 2rem 2.5rem; }
+    header h1 { font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 800; }
+    header h1 span { color: var(--rope); }
+    header p { margin-top: 0.4rem; opacity: 0.7; font-size: 0.9rem; }
+    .container { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .section { margin-bottom: 2.5rem; }
+    .section h2 { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--border); }
+    .route { background: white; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 0.75rem; overflow: hidden; }
+    .route-header { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; }
+    .method { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 500; padding: 0.2rem 0.55rem; border-radius: 4px; }
+    .GET { background: var(--get-bg); color: var(--get); }
+    .POST { background: var(--post-bg); color: var(--post); }
+    .PUT { background: var(--put-bg); color: var(--put); }
+    .DELETE { background: var(--delete-bg); color: var(--delete); }
+    .route-path { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--text); }
+    .route-desc { margin-left: auto; font-size: 0.82rem; color: var(--muted); }
+    .auth-badge { font-size: 0.72rem; background: #fef9c3; color: #92400e; padding: 0.15rem 0.45rem; border-radius: 4px; }
+    .special-box { background: var(--foam); border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem; margin-bottom: 1rem; }
+    .special-box h3 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem; }
+    .special-box ul { padding-left: 1.25rem; font-size: 0.875rem; line-height: 1.8; color: var(--muted); }
+    a.back { display: inline-block; margin-bottom: 1.5rem; color: var(--wave); text-decoration: none; font-size: 0.875rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>⚓ Port de <span>Russell</span> — Documentation API</h1>
+    <p>API REST privée — Gestion des catways et réservations</p>
+  </header>
+
+  <div class="container">
+    <a href="/" class="back">← Retour à l'accueil</a>
+
+    <div class="special-box">
+      <h3>🔒 Authentification requise</h3>
+      <ul>
+        <li>Toutes les routes (sauf <code>POST /login</code> et <code>GET /</code>) nécessitent une session active.</li>
+        <li>Se connecter via <code>POST /login</code> avec <strong>email</strong> et <strong>password</strong>.</li>
+        <li>Se déconnecter via <code>GET /logout</code>.</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Authentification</h2>
+      <div class="route"><div class="route-header"><span class="method POST">POST</span><span class="route-path">/login</span><span class="route-desc">Connexion (email + password)</span></div></div>
+      <div class="route"><div class="route-header"><span class="method GET">GET</span><span class="route-path">/logout</span><span class="route-desc">Déconnexion</span></div></div>
+    </div>
+
+    <div class="section">
+      <h2>Catways</h2>
+      <div class="route"><div class="route-header"><span class="method GET">GET</span><span class="route-path">/catways</span><span class="auth-badge">🔒 Auth</span><span class="route-desc">Lister tous les catways</span></div></div>
+      <div class="route"><div class="route-header"><span class="method GET">GET</span><span class="route-path">/catways/:id</span><span class="auth-badge">🔒 Auth</span><span class="route-desc">Détail d'un catway</span></div></div>
+      <div class="route"><div class="route-header"><span class="method POST">POST</span><span class="route-path">/catways</span><span class="auth-badge">🔒 Auth</span><span class="route-desc">Créer un catway</span></div></div>
+      <div class="route"><div class="route-header"><span class="method PUT">PUT</span><span class="route-path">/catways/:id</span><span class="auth-badge">🔒 Auth</span><span class="route-desc">Modifier l'état d'un catway</span></div></div>
+      <div class="route"><div class="route-header"><span class="method DELETE">DELETE</span><span class="route-path">/catways/:id</span><span class="auth-badge">🔒 Auth</span><span class="route-desc">Supprimer un catway</span></div></div>
+    </div>
+
+    <div class="section">
+      <h2>Réservations (sous-ressource des catways)</h2>
+      <div class="route"><div class="route-header"><span class="method GET">GET</span><span class="route-path">/catways/:id/reservations</span><span class="auth-badge">🔒 Auth</span><span class="route-desc">Lister les réservations</span></div></div>
+      <div class="route"><div class="route-header"><span class="method GET">GET</span><span class="route-path">/catway/:id/reservations/:idReservation</span><span class="auth-badge">🔒 Auth</span><span class="route-desc">Détail d'une réservation</span></div></div>
+      <div class="route"><div class="route-header"><span class="method POST">POST</span><span class="route-path">/catways/:id/reservations</span><span class="auth-badge">🔒 Auth</span><span class="route-desc">Créer une réservation</span></div></div>
+      <div class="route"><div class="route-header"><span class="method PUT">PUT</span><span class="route-path">/catways/:id/reservations/:idReservation</span><span class="auth-badge">🔒 Auth</span><span class="route-desc">Modifier une réservation</span></div></div>
+      <div class="route"><div class="route-header"><span class="method DELETE">DELETE</span><span class="route-path">/catway/:id/reservations/:idReservation</span><span class="auth-badge">🔒 Auth</span><span class="route-desc">Supprimer une réservation</span></div></div>
+    </div>
+
+    <div class="section">
+      <h2>Utilisateurs</h2>
+      <div class="route"><div class="route-header"><span class="method GET">GET</span><span class="route-path">/users/</span><span class="auth-badge">🔒 Auth</span><span class="route-desc">Lister les utilisateurs</span></div></div>
+      <div class="route"><div class="route-header"><span class="method GET">GET</span><span class="route-path">/users/:email</span><span class="auth-badge">🔒 Auth</span><span class="route-desc">Détail d'un utilisateur</span></div></div>
+      <div class="route"><div class="route-header"><span class="method POST">POST</span><span class="route-path">/users/</span><span class="auth-badge">🔒 Auth</span><span class="route-desc">Créer un utilisateur</span></div></div>
+      <div class="route"><div class="route-header"><span class="method PUT">PUT</span><span class="route-path">/users/:email</span><span class="auth-badge">🔒 Auth</span><span class="route-desc">Modifier un utilisateur</span></div></div>
+      <div class="route"><div class="route-header"><span class="method DELETE">DELETE</span><span class="route-path">/users/:email</span><span class="auth-badge">🔒 Auth</span><span class="route-desc">Supprimer un utilisateur</span></div></div>
+    </div>
+  </div>
+</body>
+</html>
