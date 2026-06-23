@@ -1,0 +1,12 @@
+<nav>
+  <a href="/dashboard" class="logo">⚓ Port de <span>Russell</span></a>
+  <% if (user) { %>
+  <div class="nav-links">
+    <a href="/dashboard" class="<%= locals.page === 'dashboard' ? 'active' : '' %>">Tableau de bord</a>
+    <a href="/catways" class="<%= locals.page === 'catways' ? 'active' : '' %>">Catways</a>
+    <a href="/users" class="<%= locals.page === 'users' ? 'active' : '' %>">Utilisateurs</a>
+    <a href="/api-docs" target="_blank">Documentation API</a>
+    <a href="/logout" class="nav-logout">Déconnexion</a>
+  </div>
+  <% } %>
+</nav>

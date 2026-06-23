@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catways — Port de Russell</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <%- include('../partials/navbar', { page: 'catways' }) %>
+  <div class="container">
+    <div class="page-header">
+      <h1>⚓ Catways</h1>
+      <a href="/catways/new" class="btn btn-primary">+ Nouveau catway</a>
+    </div>
+
+    <% if (error) { %><div class="alert alert-error"><%= error %></div><% } %>
+
+    <div class="card">
+      <% if (catways.length === 0) { %>
+        <div class="empty-state"><div class="icon">⚓</div><p>Aucun catway enregistré.</p></div>
+      <% } else { %>
+        <table>
+          <thead>
+            <tr>
+              <th>Numéro</th>
+              <th>Type</th>
+              <th>État</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% catways.forEach(c => { %>
+            <tr>
+              <td><strong>#<%= c.catwayNumber %></strong></td>
+              <td><span class="badge badge-<%= c.catwayType %>"><%= c.catwayType %></span></td>
+              <td style="max-width: 320px; font-size: 0.85rem;"><%= c.catwayState %></td>
+              <td>
+                <a href="/catways/<%= c._id %>" class="btn btn-secondary btn-sm">Détail</a>
+                <a href="/catways/<%= c._id %>/edit" class="btn btn-secondary btn-sm">Modifier</a>
+                <form action="/catways/<%= c._id %>?_method=DELETE" method="POST" style="display:inline" onsubmit="return confirm('Supprimer ce catway ?')">
+                  <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                </form>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      <% } %>
+    </div>
+  </div>
+</body>
+</html>

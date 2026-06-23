@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catway #<%= catway.catwayNumber %> — Port de Russell</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <%- include('../partials/navbar', { page: 'catways' }) %>
+  <div class="container">
+    <div class="page-header">
+      <h1>Catway #<%= catway.catwayNumber %></h1>
+      <div style="display:flex; gap: 0.5rem;">
+        <a href="/catways/<%= catway._id %>/edit" class="btn btn-secondary">Modifier l'état</a>
+        <a href="/catways/<%= catway._id %>/reservations/new" class="btn btn-primary">+ Réservation</a>
+        <a href="/catways" class="btn btn-secondary">← Retour</a>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom: 1.5rem;">
+      <div class="card-header">Informations du catway</div>
+      <div class="detail-grid">
+        <div class="detail-item">
+          <label>Numéro</label>
+          <p>#<%= catway.catwayNumber %></p>
+        </div>
+        <div class="detail-item">
+          <label>Type</label>
+          <p><span class="badge badge-<%= catway.catwayType %>"><%= catway.catwayType %></span></p>
+        </div>
+        <div class="detail-item" style="grid-column: 1 / -1;">
+          <label>État</label>
+          <p><%= catway.catwayState %></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">Réservations de ce catway</div>
+      <% if (reservations.length === 0) { %>
+        <div class="empty-state"><div class="icon">📭</div><p>Aucune réservation pour ce catway.</p></div>
+      <% } else { %>
+        <table>
+          <thead>
+            <tr><th>Client</th><th>Bateau</th><th>Début</th><th>Fin</th><th>Actions</th></tr>
+          </thead>
+          <tbody>
+            <% reservations.forEach(r => { %>
+            <% const now = new Date(); const start = new Date(r.startDate); const end = new Date(r.endDate);
+               const status = now >= start && now <= end ? 'active' : (now < start ? 'upcoming' : 'past');
+               const labels = { active: 'En cours', upcoming: 'À venir', past: 'Terminée' }; %>
+            <tr>
+              <td><%= r.clientName %></td>
+              <td><%= r.boatName %></td>
+              <td><%= start.toLocaleDateString('fr-FR') %></td>
+              <td><%= end.toLocaleDateString('fr-FR') %></td>
+              <td>
+                <a href="/catways/<%= catway._id %>/reservations/<%= r._id %>" class="btn btn-secondary btn-sm">Détail</a>
+                <form action="/catways/<%= catway._id %>/reservations/<%= r._id %>?_method=DELETE" method="POST" style="display:inline" onsubmit="return confirm('Supprimer cette réservation ?')">
+                  <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                </form>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      <% } %>
+    </div>
+  </div>
+</body>
+</html>

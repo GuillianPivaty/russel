@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Réservation — Port de Russell</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <%- include('../partials/navbar', { page: 'catways' }) %>
+  <div class="container">
+    <div class="page-header">
+      <h1>Détail réservation</h1>
+      <div style="display:flex; gap: 0.5rem;">
+        <a href="/catways/<%= catway._id %>/reservations/<%= reservation._id %>/edit" class="btn btn-secondary">Modifier</a>
+        <a href="/catways/<%= catway._id %>" class="btn btn-secondary">← Retour</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="detail-grid">
+        <div class="detail-item">
+          <label>Catway</label>
+          <p>#<%= reservation.catwayNumber %></p>
+        </div>
+        <div class="detail-item">
+          <label>Client</label>
+          <p><%= reservation.clientName %></p>
+        </div>
+        <div class="detail-item">
+          <label>Bateau</label>
+          <p><%= reservation.boatName %></p>
+        </div>
+        <div class="detail-item">
+          <label>Date de début</label>
+          <p><%= new Date(reservation.startDate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) %></p>
+        </div>
+        <div class="detail-item">
+          <label>Date de fin</label>
+          <p><%= new Date(reservation.endDate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) %></p>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top: 1rem;">
+      <form action="/catways/<%= catway._id %>/reservations/<%= reservation._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Supprimer cette réservation ?')">
+        <button type="submit" class="btn btn-danger">Supprimer la réservation</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Port de Russell — Capitainerie</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="login-page">
+    <div class="login-box">
+      <div class="login-logo">
+        <h1>⚓ Port de <span>Russell</span></h1>
+        <p>Système de gestion des catways — Capitainerie</p>
+      </div>
+
+      <% if (error) { %>
+        <div class="alert alert-error"><%= error %></div>
+      <% } %>
+
+      <form action="/login" method="POST">
+        <div class="form-group">
+          <label for="email">Adresse email</label>
+          <input type="email" id="email" name="email" placeholder="votre@email.fr" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Mot de passe</label>
+          <input type="password" id="password" name="password" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%; margin-top: 0.5rem; padding: 0.75rem;">
+          Se connecter
+        </button>
+      </form>
+
+      <div class="login-doc-link">
+        <a href="/api-docs" target="_blank">Consulter la documentation de l'API →</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

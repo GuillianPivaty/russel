@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= user.username %> — Port de Russell</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <%- include('../partials/navbar', { page: 'users' }) %>
+  <div class="container">
+    <div class="page-header">
+      <h1><%= user.username %></h1>
+      <div style="display:flex; gap: 0.5rem;">
+        <a href="/users/<%= encodeURIComponent(user.email) %>/edit" class="btn btn-secondary">Modifier</a>
+        <a href="/users" class="btn btn-secondary">← Retour</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="detail-grid">
+        <div class="detail-item">
+          <label>Nom d'utilisateur</label>
+          <p><%= user.username %></p>
+        </div>
+        <div class="detail-item">
+          <label>Email</label>
+          <p><%= user.email %></p>
+        </div>
+        <div class="detail-item">
+          <label>Créé le</label>
+          <p><%= new Date(user.createdAt).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) %></p>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top: 1rem;">
+      <form action="/users/<%= encodeURIComponent(user.email) %>?_method=DELETE" method="POST" onsubmit="return confirm('Supprimer cet utilisateur ?')">
+        <button type="submit" class="btn btn-danger">Supprimer l'utilisateur</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

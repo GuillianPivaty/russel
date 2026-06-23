@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tableau de bord — Port de Russell</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <%- include('partials/navbar', { page: 'dashboard' }) %>
+
+  <div class="dashboard-header">
+    <div class="container" style="padding-top: 0; padding-bottom: 0;">
+      <h1>Bonjour, <%= user.username %> 👋</h1>
+      <p class="subtitle">Capitainerie du Port de Russell</p>
+      <div class="dashboard-meta">
+        <div class="meta-item">
+          <strong><%= now.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) %></strong>
+          Date du jour
+        </div>
+        <div class="meta-item">
+          <strong><%= user.email %></strong>
+          Compte connecté
+        </div>
+        <div class="meta-item">
+          <strong><%= activeReservations.length %></strong>
+          Réservations actives
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container" style="padding-top: 2.5rem;">
+    <div class="quick-links" style="margin-bottom: 2rem;">
+      <a href="/catways" class="quick-link-card">
+        <div class="icon">⚓</div>
+        <div>
+          <div class="label">Catways</div>
+          <div class="sublabel">Gérer les pontons</div>
+        </div>
+      </a>
+      <a href="/catways" class="quick-link-card">
+        <div class="icon">📋</div>
+        <div>
+          <div class="label">Réservations</div>
+          <div class="sublabel">Gérer les amarrages</div>
+        </div>
+      </a>
+      <a href="/users" class="quick-link-card">
+        <div class="icon">👤</div>
+        <div>
+          <div class="label">Utilisateurs</div>
+          <div class="sublabel">Gérer les accès</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="card">
+      <div class="card-header">Réservations en cours</div>
+      <% if (activeReservations.length === 0) { %>
+        <div class="empty-state">
+          <div class="icon">📭</div>
+          <p>Aucune réservation active en ce moment.</p>
+        </div>
+      <% } else { %>
+        <table>
+          <thead>
+            <tr>
+              <th>Catway</th>
+              <th>Client</th>
+              <th>Bateau</th>
+              <th>Début</th>
+              <th>Fin</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% activeReservations.forEach(r => { %>
+            <tr>
+              <td><strong>#<%= r.catwayNumber %></strong></td>
+              <td><%= r.clientName %></td>
+              <td><%= r.boatName %></td>
+              <td><%= new Date(r.startDate).toLocaleDateString('fr-FR') %></td>
+              <td><%= new Date(r.endDate).toLocaleDateString('fr-FR') %></td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      <% } %>
+    </div>
+  </div>
+</body>
+</html>
